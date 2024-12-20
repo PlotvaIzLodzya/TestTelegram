@@ -12,6 +12,8 @@ html, body {
 
 p {
   font-family: Verdana, sans-serif;
+  color:white;
+  font-size:1vw;
 }
 
 canvas {
