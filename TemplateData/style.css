@@ -10,6 +10,10 @@ html, body {
     height: 100%;
 }
 
+p {
+  font-family: Verdana, sans-serif;
+}
+
 canvas {
     display: block;
 }
