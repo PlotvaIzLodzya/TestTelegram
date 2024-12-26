@@ -326,6 +326,16 @@
   <assembly fullname="LeanLocalization.TMP, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
     <type fullname="Lean.Localization.LeanLocalizedTextMeshProUGUI" preserve="all" />
   </assembly>
+  <assembly fullname="MeshCombinerCore, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="TeoGames.Mesh_Combiner.Scripts.Combine.Combinable" preserve="all" />
+    <type fullname="TeoGames.Mesh_Combiner.Scripts.Combine.MeshCombiner" preserve="all" />
+    <type fullname="TeoGames.Mesh_Combiner.Scripts.Combine.PreBake.BakedMesh" preserve="all" />
+    <type fullname="TeoGames.Mesh_Combiner.Scripts.Combine.PreBake.BakedRenderer" preserve="all" />
+    <type fullname="TeoGames.Mesh_Combiner.Scripts.Combine.SceneCombiner.SceneCombinerRegistry" preserve="all" />
+    <type fullname="TeoGames.Mesh_Combiner.Scripts.BlendShape.BlendShapeConfiguration" preserve="nothing" serialized="true" />
+    <type fullname="TeoGames.Mesh_Combiner.Scripts.Combine.CombinableCache" preserve="nothing" serialized="true" />
+    <type fullname="TeoGames.Mesh_Combiner.Scripts.Combine.Lod.LodConfiguration" preserve="nothing" serialized="true" />
+  </assembly>
   <assembly fullname="MPUIKit, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
     <type fullname="MPUIKIT.MPImage" preserve="all" />
     <type fullname="MPUIKIT.Circle" preserve="nothing" serialized="true" />
@@ -402,6 +412,7 @@
     <type fullname="UnityEngine.Events.PersistentCallGroup" preserve="nothing" serialized="true" />
     <type fullname="UnityEngine.Events.PersistentListenerMode" preserve="nothing" serialized="true" />
     <type fullname="UnityEngine.RectOffset" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.Events.UnityEvent" preserve="nothing" serialized="true" />
   </assembly>
   <assembly fullname="UnityEngine.ParticleSystemModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
     <type fullname="UnityEngine.ParticleSystem" preserve="all" />
