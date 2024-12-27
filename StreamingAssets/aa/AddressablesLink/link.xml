@@ -292,18 +292,18 @@
     <type fullname="WinButton" preserve="all" />
     <type fullname="WinButtonADS" preserve="all" />
     <type fullname="Witch" preserve="all" />
-    <type fullname="BuildingData" preserve="nothing" serialized="true" />
-    <type fullname="ForgeUpgraderStage" preserve="nothing" serialized="true" />
-    <type fullname="LevelIcons" preserve="nothing" serialized="true" />
-    <type fullname="LocationName" preserve="nothing" serialized="true" />
-    <type fullname="PlayerSquadUpgrade" preserve="nothing" serialized="true" />
-    <type fullname="PlayerStatType" preserve="nothing" serialized="true" />
-    <type fullname="PlayerUpgrade" preserve="nothing" serialized="true" />
-    <type fullname="PlayerUpgradeGroup" preserve="nothing" serialized="true" />
-    <type fullname="StartCameraMover/StartCameraPointToMove" preserve="nothing" serialized="true" />
-    <type fullname="TransportDataPack" preserve="nothing" serialized="true" />
-    <type fullname="UpgraderLevel" preserve="nothing" serialized="true" />
-    <type fullname="UpgraderStageData" preserve="nothing" serialized="true" />
+    <type fullname=".BuildingData" preserve="nothing" serialized="true" />
+    <type fullname=".ForgeUpgraderStage" preserve="nothing" serialized="true" />
+    <type fullname=".LevelIcons" preserve="nothing" serialized="true" />
+    <type fullname=".LocationName" preserve="nothing" serialized="true" />
+    <type fullname=".PlayerSquadUpgrade" preserve="nothing" serialized="true" />
+    <type fullname=".PlayerStatType" preserve="nothing" serialized="true" />
+    <type fullname=".PlayerUpgrade" preserve="nothing" serialized="true" />
+    <type fullname=".PlayerUpgradeGroup" preserve="nothing" serialized="true" />
+    <type fullname=".StartCameraMover/StartCameraPointToMove" preserve="nothing" serialized="true" />
+    <type fullname=".TransportDataPack" preserve="nothing" serialized="true" />
+    <type fullname=".UpgraderLevel" preserve="nothing" serialized="true" />
+    <type fullname=".UpgraderStageData" preserve="nothing" serialized="true" />
   </assembly>
   <assembly fullname="Cinemachine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
     <type fullname="Cinemachine.CinemachineBrain" preserve="all" />
@@ -323,9 +323,6 @@
     <type fullname="Lean.Localization.LeanPhrase" preserve="all" />
     <type fullname="Lean.Localization.LeanPhrase/Entry" preserve="nothing" serialized="true" />
   </assembly>
-  <assembly fullname="LeanLocalization.TMP, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-    <type fullname="Lean.Localization.LeanLocalizedTextMeshProUGUI" preserve="all" />
-  </assembly>
   <assembly fullname="MPUIKit, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
     <type fullname="MPUIKIT.MPImage" preserve="all" />
     <type fullname="MPUIKIT.Circle" preserve="nothing" serialized="true" />
@@ -343,7 +340,6 @@
     <type fullname="UnityEngine.ResourceManagement.ResourceProviders.AssetBundleProvider" preserve="all" />
     <type fullname="UnityEngine.ResourceManagement.ResourceProviders.BundledAssetProvider" preserve="all" />
     <type fullname="UnityEngine.ResourceManagement.ResourceProviders.InstanceProvider" preserve="all" />
-    <type fullname="UnityEngine.ResourceManagement.ResourceProviders.LegacyResourcesProvider" preserve="all" />
     <type fullname="UnityEngine.ResourceManagement.ResourceProviders.SceneProvider" preserve="all" />
   </assembly>
   <assembly fullname="Unity.TextMeshPro, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
@@ -379,7 +375,6 @@
   </assembly>
   <assembly fullname="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
     <type fullname="UnityEngine.Camera" preserve="all" />
-    <type fullname="UnityEngine.Cubemap" preserve="all" />
     <type fullname="UnityEngine.GameObject" preserve="all" />
     <type fullname="UnityEngine.Light" preserve="all" />
     <type fullname="UnityEngine.LightmapSettings" preserve="all" />
@@ -387,6 +382,7 @@
     <type fullname="UnityEngine.Mesh" preserve="all" />
     <type fullname="UnityEngine.MeshFilter" preserve="all" />
     <type fullname="UnityEngine.MeshRenderer" preserve="all" />
+    <type fullname="UnityEngine.MonoBehaviour" preserve="all" />
     <type fullname="UnityEngine.Object" preserve="all" />
     <type fullname="UnityEngine.Projector" preserve="all" />
     <type fullname="UnityEngine.RectTransform" preserve="all" />
