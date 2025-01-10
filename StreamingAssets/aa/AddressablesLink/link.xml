@@ -129,6 +129,7 @@
     <type fullname="Healer" preserve="all" />
     <type fullname="HeavyBarracks" preserve="all" />
     <type fullname="HeavyZoneOpener" preserve="all" />
+    <type fullname="ImageRaycastTargetDisable" preserve="all" />
     <type fullname="Inferno" preserve="all" />
     <type fullname="IntarstitialADSShower" preserve="all" />
     <type fullname="LavaAnimation" preserve="all" />
