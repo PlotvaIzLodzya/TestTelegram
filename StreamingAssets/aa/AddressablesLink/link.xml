@@ -1,7 +1,4 @@
 <linker>
-  <assembly fullname="Agava.WebUtility, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-    <type fullname="Agava.WebUtility.WebEventSystem" preserve="all" />
-  </assembly>
   <assembly fullname="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
     <type fullname="_ProjectAssets.Scripts.Pointers.Pointer" preserve="all" />
     <type fullname="_ProjectAssets.Scripts.Pointers.PointerManager" preserve="all" />
@@ -387,6 +384,7 @@
     <type fullname="UnityEngine.Mesh" preserve="all" />
     <type fullname="UnityEngine.MeshFilter" preserve="all" />
     <type fullname="UnityEngine.MeshRenderer" preserve="all" />
+    <type fullname="UnityEngine.MonoBehaviour" preserve="all" />
     <type fullname="UnityEngine.Object" preserve="all" />
     <type fullname="UnityEngine.Projector" preserve="all" />
     <type fullname="UnityEngine.RectTransform" preserve="all" />
