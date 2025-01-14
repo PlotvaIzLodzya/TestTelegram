@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity WebGL Player | CubeCommander</title>
+    <title>Unity WebGL Player | WebGL touch lag check</title>
   </head>
   <body style="text-align: center; padding: 0; border: 0; margin: 0;">
-    <canvas id="unity-canvas" width=960 height=600 tabindex="-1" style="width: 960px; height: 600px; background: #231F20"></canvas>
+    <canvas id="unity-canvas" width=960 height=600 style="width: 960px; height: 600px; background: #231F20"></canvas>
     <script src="Build/TestTelegram.loader.js"></script>
     <script>
       if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
@@ -25,12 +25,12 @@
       }
 
       createUnityInstance(document.querySelector("#unity-canvas"), {
-        dataUrl: "Build/1faa73c0ca77624c78154d1f7dd53e64.data",
-        frameworkUrl: "Build/76477c7778373d27883cec888e88e8f1.js",
-        codeUrl: "Build/cbf5d04b674ac380c0248750cdeb62bf.wasm",
+        dataUrl: "Build/58fad76944e7a96c4e6cc74b6f1d55cd.data",
+        frameworkUrl: "Build/d802a4fb194ff79ea1a72edf3a1a3c11.js",
+        codeUrl: "Build/d8864b6c59b69fc80b141cff59396554.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
-        productName: "CubeCommander",
+        productName: "WebGL touch lag check",
         productVersion: "0.1",
         // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
         // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
