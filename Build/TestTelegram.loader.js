@@ -85,10 +85,8 @@ function createUnityInstance(canvas, config, onProgress) {
       }
     },
     locateFile: function (url) {
-      return (
-        url == "build.wasm" ? this.codeUrl :
-        url
-      );
+      if (url == "build.wasm") return this.codeUrl;
+      return url;
     },
     disabledCanvasEvents: [
       "contextmenu",
@@ -122,42 +120,13 @@ function createUnityInstance(canvas, config, onProgress) {
   window.addEventListener("error", errorListener);
   window.addEventListener("unhandledrejection", errorListener);
 
-  // Clear the event handlers we added above when the app quits, so that the event handler
-  // functions will not hold references to this JS function scope after
-  // exit, to allow JS garbage collection to take place.
-  Module.deinitializers.push(function() {
-    Module['disableAccessToMediaDevices']();
-    disabledCanvasEvents.forEach(function (disabledCanvasEvent) {
-      canvas.removeEventListener(disabledCanvasEvent, preventDefault);
-    });
-    window.removeEventListener("error", errorListener);
-    window.removeEventListener("unhandledrejection", errorListener);
-
-    for (var id in Module.intervals)
-    {
-      window.clearInterval(id);
-    }
-    Module.intervals = {};
-  });
-
-  Module.QuitCleanup = function () {
-    for (var i = 0; i < Module.deinitializers.length; i++) {
-      Module.deinitializers[i]();
-    }
-    Module.deinitializers = [];
-    // After all deinitializer callbacks are called, notify user code that the Unity game instance has now shut down.
-    if (typeof Module.onQuit == "function")
-      Module.onQuit();
-    };
-
   // Safari does not automatically stretch the fullscreen element to fill the screen.
   // The CSS width/height of the canvas causes it to remain the same size in the full screen
   // window on Safari, resulting in it being a small canvas with black borders filling the
   // rest of the screen.
   var _savedElementWidth = "";
   var _savedElementHeight = "";
-  // Safari uses webkitfullscreenchange event and not fullscreenchange
-  document.addEventListener("webkitfullscreenchange", function(e) {
+  function webkitFullscreenChangeEventHandler(e) {
     // Safari uses webkitCurrentFullScreenElement and not fullscreenElement.
     var fullscreenElement = document.webkitCurrentFullScreenElement;
     if (fullscreenElement === canvas) {
@@ -175,7 +144,40 @@ function createUnityInstance(canvas, config, onProgress) {
         _savedElementHeight = "";
       }
     }
+  }
+  // Safari uses webkitfullscreenchange event and not fullscreenchange
+  document.addEventListener("webkitfullscreenchange", webkitFullscreenChangeEventHandler);
+
+  // Clear the event handlers we added above when the app quits, so that the event handler
+  // functions will not hold references to this JS function scope after
+  // exit, to allow JS garbage collection to take place.
+  Module.deinitializers.push(function() {
+    Module['disableAccessToMediaDevices']();
+    disabledCanvasEvents.forEach(function (disabledCanvasEvent) {
+      canvas.removeEventListener(disabledCanvasEvent, preventDefault);
+    });
+    window.removeEventListener("error", errorListener);
+    window.removeEventListener("unhandledrejection", errorListener);
+
+    document.removeEventListener("webkitfullscreenchange", webkitFullscreenChangeEventHandler);
+
+    for (var id in Module.intervals)
+    {
+      window.clearInterval(id);
+    }
+    Module.intervals = {};
   });
+
+  Module.QuitCleanup = function () {
+    for (var i = 0; i < Module.deinitializers.length; i++) {
+      Module.deinitializers[i]();
+    }
+    Module.deinitializers = [];
+    // After all deinitializer callbacks are called, notify user code that the Unity game instance has now shut down.
+    if (typeof Module.onQuit == "function")
+      Module.onQuit();
+
+  };
 
   var unityInstance = {
     Module: Module,
@@ -194,6 +196,15 @@ function createUnityInstance(canvas, config, onProgress) {
         Module.shouldQuit = true;
         Module.onQuit = resolve;
       });
+    },
+    GetMemoryInfo: function () {
+      var memInfoPtr = Module._getMemInfo();
+      return {
+        totalWASMHeapSize: Module.HEAPU32[memInfoPtr >> 2],
+        usedWASMHeapSize: Module.HEAPU32[(memInfoPtr >> 2) + 1],
+        totalJSHeapSize: Module.HEAPF64[(memInfoPtr >> 3) + 1],
+        usedJSHeapSize: Module.HEAPF64[(memInfoPtr >> 3) + 2]
+      };
     },
   };
 
@@ -239,7 +250,7 @@ function createUnityInstance(canvas, config, onProgress) {
       ['FreeBSD( )', 'FreeBSD'],
       ['OpenBSD( )', 'OpenBSD'],
       ['Linux|X11()', 'Linux'],
-      ['Mac OS X ([0-9_\.]+)', 'MacOS'],
+      ['Mac OS X ([0-9_\\.]+)', 'MacOS'],
       ['bot|google|baidu|bing|msn|teoma|slurp|yandex', 'Search Bot']
     ];
     for(var o = 0; o < oses.length; ++o) {
@@ -266,8 +277,8 @@ function createUnityInstance(canvas, config, onProgress) {
 
     canvas = document.createElement("canvas");
     if (canvas) {
-      gl = canvas.getContext("webgl2");
-      glVersion = gl ? 2 : 0;
+      var gl = canvas.getContext("webgl2");
+      var glVersion = gl ? 2 : 0;
       if (!gl) {
         if (gl = canvas && canvas.getContext("webgl")) glVersion = 1;
       }
@@ -525,6 +536,7 @@ Module.fetchWithProgress = function () {
 }();
 
 
+
   function downloadBinary(urlId) {
       progressUpdate(urlId);
       var cacheControl = "no-store";
@@ -536,6 +548,7 @@ Module.fetchWithProgress = function () {
         method: "GET",
         companyName: Module.companyName,
         productName: Module.productName,
+        productVersion: Module.productVersion,
         control: cacheControl,
         mode: mode,
         onProgress: function (event) {
@@ -641,11 +654,18 @@ Module.fetchWithProgress = function () {
   return new Promise(function (resolve, reject) {
     if (!Module.SystemInfo.hasWebGL) {
       reject("Your browser does not support WebGL.");
+    } else if (Module.SystemInfo.hasWebGL == 1) {
+      var msg = "Your browser does not support graphics API \"WebGL 2\" which is required for this content.";
+      if (Module.SystemInfo.browser == 'Safari' && parseInt(Module.SystemInfo.browserVersion) < 15) {
+        if (Module.SystemInfo.mobile || navigator.maxTouchPoints > 1)
+          msg += "\nUpgrade to iOS 15 or later.";
+        else
+          msg += "\nUpgrade to Safari 15 or later.";
+      }
+      reject(msg);
     } else if (!Module.SystemInfo.hasWasm) {
       reject("Your browser does not support WebAssembly.");
     } else {
-      if (Module.SystemInfo.hasWebGL == 1)
-        Module.print("Warning: Your browser does not support \"WebGL 2\" Graphics API, switching to \"WebGL 1\"");
       Module.startupErrorHandler = reject;
       onProgress(0);
       Module.postRun.push(function () {
