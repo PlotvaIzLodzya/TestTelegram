@@ -1,4 +1,7 @@
 <linker>
+  <assembly fullname="Agava.WebUtility, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="Agava.WebUtility.WebEventSystem" preserve="all" />
+  </assembly>
   <assembly fullname="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
     <type fullname="_ProjectAssets.Scripts.Pointers.Pointer" preserve="all" />
     <type fullname="_ProjectAssets.Scripts.Pointers.PointerManager" preserve="all" />
