@@ -1,40 +1,102 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity WebGL Player | WebGL touch lag check</title>
-  </head>
-  <body style="text-align: center; padding: 0; border: 0; margin: 0;">
-    <canvas id="unity-canvas" width=960 height=600 tabindex="-1" style="width: 960px; height: 600px; background: #231F20"></canvas>
-    <script src="Build/TestTelegram.loader.js"></script>
-    <script>
-      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        // Mobile device style: fill the whole browser client area with the game canvas:
-        var meta = document.createElement('meta');
-        meta.name = 'viewport';
-        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
-        document.getElementsByTagName('head')[0].appendChild(meta);
 
-        var canvas = document.querySelector("#unity-canvas");
-        canvas.style.width = "100%";
-        canvas.style.height = "100%";
-        canvas.style.position = "fixed";
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>CubeCommander</title>
+  <link rel="stylesheet" href="TemplateData/style.css">
 
-        document.body.style.textAlign = "left";
-      }
+  <script>
+    const overlayBackgroundColor = "";
+    const progressBarFillColor = "";
+    const progressBarBackgroundColor = "";
+    const progressBarBorderColor = "";
+  </script>
 
-      createUnityInstance(document.querySelector("#unity-canvas"), {
-        dataUrl: "Build/c4dcf1f01898ebe19d4dc926cb7b3b0f.data",
-        frameworkUrl: "Build/c8651925145ca74cd57402dd8ada0961.js",
-        codeUrl: "Build/6e4cad37257de26fc3c54eb6b50d500d.wasm",
-        streamingAssetsUrl: "StreamingAssets",
-        companyName: "DefaultCompany",
-        productName: "WebGL touch lag check",
-        productVersion: "0.1",
-        // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
-        // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
+</head>
+
+<body class="dark">
+  <div id="unity-container" class="unity-desktop">
+    <canvas id="unity-canvas"></canvas>
+  </div>
+  <div id="loading-cover" style="display:none;">
+    <div id="unity-loading-bar">
+      <div id="unity-logo"><img src="logo.png"></div>
+      <div id="unity-progress-bar-empty" style="display: none;">
+        <div id="unity-progress-bar-full"></div>
+	<p align = "right">Internet speed may affect loading time.</p>
+      </div>
+      <div class="spinner"></div>
+    </div>
+  </div>
+
+  <script>
+    const buildUrl = "Build";
+    const loaderUrl = buildUrl + "/TestTelegram.loader.js";
+    const config = {
+      dataUrl: buildUrl + "/ef1233cb2389416713f6258b8ca48039.data",
+      frameworkUrl: buildUrl + "/5ce6eb4728b9f4af8d903dc5defc2521.js",
+      codeUrl: buildUrl + "/24e62c92dd3c362fe8628e94e77d4488.wasm",
+      streamingAssetsUrl: "StreamingAssets",
+      companyName: "DefaultCompany",
+      productName: "CubeCommander",
+      productVersion: "0.1",
+    };
+
+    const container = document.querySelector("#unity-container");
+    const canvas = document.querySelector("#unity-canvas");
+    const loadingCover = document.querySelector("#loading-cover");
+    const progressBarEmpty = document.querySelector("#unity-progress-bar-empty");
+    const progressBarFull = document.querySelector("#unity-progress-bar-full");
+    const spinner = document.querySelector('.spinner');
+
+    if (overlayBackgroundColor !== "-" && overlayBackgroundColor !== " " && overlayBackgroundColor !== "")
+      canvas.style.background = overlayBackgroundColor;
+
+    if (progressBarFillColor !== "-" && progressBarFillColor !== " " && progressBarFillColor !== "")
+      progressBarFull.style.background = progressBarFillColor;
+
+    if (progressBarBackgroundColor !== "-" && progressBarBackgroundColor !== " " && progressBarBackgroundColor !== "")
+      progressBarEmpty.style.background = progressBarBackgroundColor;
+
+    if (progressBarBorderColor !== "-" && progressBarBorderColor !== " " && progressBarBorderColor !== "")
+      progressBarEmpty.style.border.color = progressBarBorderColor;
+
+
+    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+      container.className = "unity-mobile";
+    }
+
+    loadingCover.style.display = "";
+
+    const unityLoader = document.createElement("script");
+    unityLoader.src = loaderUrl;
+    unityLoader.onload = async () => {
+      //await _gpAwaiter.ready;
+      createUnityInstance(canvas, config, (progress) => {
+        spinner.style.display = "none";
+        progressBarEmpty.style.display = "";
+        progressBarFull.style.width = `${100 * progress}%`;
+      }).then((unityInstance) => {
+        window.unityInstance = unityInstance;
+        //_unityAwaiter.done(unityInstance);
+        loadingCover.style.display = "none";
+      }).catch((message) => {
+        //_unityAwaiter.abort(message);
+        alert(message);
       });
-    </script>
-  </body>
+    };
+    document.body.appendChild(unityLoader);
+
+    document.addEventListener("pointerdown", () => {
+      container.focus();
+      window.focus();
+      canvas.focus();
+    });
+
+  </script>
+</body>
+
 </html>
