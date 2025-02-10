@@ -5,6 +5,7 @@ var playDeckBridge = (function() {
     const handleReceiveMessage = (message) => {
         const playdeck = message?.data?.playdeck;
 
+        console.log(message);
         if (!playdeck) return;
 
         console.log(playdeck);
