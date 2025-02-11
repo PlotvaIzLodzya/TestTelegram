@@ -5,13 +5,9 @@ var playDeckBridge = (function() {
     const handleReceiveMessage = (message) => {
         const playdeck = message?.data?.playdeck;
 
-        console.log("handleReceiveMessage:");
-        console.log(message);
-
         if (!playdeck) return;
 
         console.log(playdeck);
-        console.log(playdeck.method);
 
         if (playdeck.method === "getUserProfile") {
             _unityInstance?.SendMessage("PlayDeckBridge", "GetUserHandler", JSON.stringify(playdeck.value))
@@ -29,6 +25,10 @@ var playDeckBridge = (function() {
         else if (playdeck.method === "getPaymentInfo") {
             console.log(playdeck.value);
             _unityInstance?.SendMessage("PlayDeckBridge", "GetPaymentInfoHandler", JSON.stringify(playdeck.value))
+        }
+        else if (playdeck.method === 'invoiceClosed') {
+            console.log(playdeck.value);
+            _unityInstance?.SendMessage("PlayDeckBridge", "InvoiceClosedHandler", JSON.stringify(playdeck.value));
         }
         else if (playdeck.method === "getShareLink") {
             console.log(playdeck.value);
@@ -58,18 +58,11 @@ var playDeckBridge = (function() {
             console.log(playdeck.value);
             _unityInstance?.SendMessage("PlayDeckBridge", "StartAdHandler", JSON.stringify(playdeck.value) );
         }
-        else if (playdeck.method === 'invoiceClosed') {
-            console.log(playdeck.value);
-        }
     }
 
     return {
         init: function(unityInstance){
             _unityInstance = unityInstance;
-
-            console.log("Init!!!");
-            _unityInstance?.SendMessage("PlayDeckBridge", "StartAdHandler", JSON.stringify("strip test"));
-
             window.addEventListener("message", handleReceiveMessage);
         },
 
