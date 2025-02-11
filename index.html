@@ -16,6 +16,32 @@
   </script>
 	<script src="playDeckBridge.js"></script>
 
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();
+    for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+    k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(window.yandexMetricaCounterId, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+    });
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/4705195" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+  <!-- /Yandex.Metrika counter -->
+
+  <script type="text/javascript" >
+    ym(window.yandexMetricaCounterId,'reachGoal','pageOpen');
+
+    addEventListener('DOMContentLoaded', (event) => {
+      const pageLoadTime = performance.timing.domContentLoadedEventStart - performance.timing.navigationStart;
+      ym(window.yandexMetricaCounterId,'reachGoal','pageLoad', { pageLoadTime: pageLoadTime / 1000 });
+    });
+  </script>
+
 </head>
 
 <body class="dark">
@@ -37,9 +63,9 @@
     const buildUrl = "Build";
     const loaderUrl = buildUrl + "/TestTelegram.loader.js";
     const config = {
-      dataUrl: buildUrl + "/9ffeffb19875206c2eba3faed6652151.data",
-      frameworkUrl: buildUrl + "/03fdec4143c291f369c0ed677046d61a.js",
-      codeUrl: buildUrl + "/74a3eee6b8cc7372ac0b6656ebcde7fb.wasm",
+      dataUrl: buildUrl + "/83c9a0c5a753e22febc44c5adcbb8cdd.data",
+      frameworkUrl: buildUrl + "/33db6eb433569671c0b80cf6d806d085.js",
+      codeUrl: buildUrl + "/d491492cb853bd4cd018994d5277381c.wasm",
       streamingAssetsUrl: "StreamingAssets",
       companyName: "DefaultCompany",
       productName: "CubeCommander",
@@ -83,6 +109,7 @@
         progressBarFull.style.width = `${100 * progress}%`;
       }).then((unityInstance) => {
 	playdeckBridgeInstance?.init(unityInstance);
+	ym(window.yandexMetricaCounterId,'reachGoal','unityStart', { unityLoadTime: (unityEndLoadingTime - unityStartLoadingTime) / 1000 });
         window.unityInstance = unityInstance;
         //_unityAwaiter.done(unityInstance);
         loadingCover.style.display = "none";
