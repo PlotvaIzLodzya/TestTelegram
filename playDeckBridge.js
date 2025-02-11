@@ -6,6 +6,7 @@ var playDeckBridge = (function() {
         const playdeck = message?.data?.playdeck;
 
         console.log(message);
+        console.log("message");
         if (!playdeck) return;
 
         console.log(playdeck);
