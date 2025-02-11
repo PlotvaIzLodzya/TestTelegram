@@ -5,11 +5,19 @@ var playDeckBridge = (function() {
     const handleReceiveMessage = (message) => {
         const playdeck = message?.data?.playdeck;
 
+        console.log("111");
         console.log(message);
-        console.log("message");
+        console.log("222");
+        console.log(playdeck);
+        console.log("333");
+        console.log(playdeck === null);
+        console.log("444");
+        console.log(playdeck === "undefined");
+
         if (!playdeck) return;
 
-        console.log(playdeck);
+        console.log("success!!1");
+        console.log(playdeck.method);
 
         if (playdeck.method === "getUserProfile") {
             _unityInstance?.SendMessage("PlayDeckBridge", "GetUserHandler", JSON.stringify(playdeck.value))
@@ -61,6 +69,9 @@ var playDeckBridge = (function() {
     return {
         init: function(unityInstance){
             _unityInstance = unityInstance;
+
+            console.log("Init!11");
+            _unityInstance?.SendMessage("PlayDeckBridge", "StartAdHandler", JSON.stringify("dsadasd"));
             window.addEventListener("message", handleReceiveMessage);
         },
 

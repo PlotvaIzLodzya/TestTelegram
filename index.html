@@ -1,103 +1,47 @@
 <!DOCTYPE html>
 <html lang="en-us">
-
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>CubeCommander</title>
-  <link rel="stylesheet" href="style.css">
-
-  <script>
-    const overlayBackgroundColor = "";
-    const progressBarFillColor = "";
-    const progressBarBackgroundColor = "";
-    const progressBarBorderColor = "";
-  </script>
-	<script src="playDeckBridge.js"></script>
-
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Sample Bridge</title>
+    <script src="playDeckBridge.js"></script>
 </head>
-
 <body class="dark">
-  <div id="unity-container" class="unity-desktop">
-    <canvas id="unity-canvas"></canvas>
-  </div>
-  <div id="loading-cover" style="display:none;">
-    <div id="unity-loading-bar">
-      <div id="unity-logo"><img src="logo.png"></div>
-      <div id="unity-progress-bar-empty" style="display: none;">
-        <div id="unity-progress-bar-full"></div>
-	<p align = "right">Internet speed may affect loading time.</p>
-      </div>
-      <div class="spinner"></div>
-    </div>
-  </div>
-
-  <script>
+<div id="unity-container" style="position: absolute; width: 100%; height: 100%">
+    <canvas id="unity-canvas" width=960 height=600 style="width: 100%; height: 100%"></canvas>
+</div>
+<script>
     const buildUrl = "Build";
-    const loaderUrl = buildUrl + "/TestTelegram.loader.js";
+    const loaderUrl = buildUrl + "/WebGL.loader.js";
     const config = {
-      dataUrl: buildUrl + "/8181201a3da72eb4c0b65da5f17632b7.data",
-      frameworkUrl: buildUrl + "/42e16517815ad5592bf349066a8249d5.js",
-      codeUrl: buildUrl + "/7b277fc24397c0350c569d3d76d9da6b.wasm",
-      streamingAssetsUrl: "StreamingAssets",
-      companyName: "DefaultCompany",
-      productName: "CubeCommander",
-      productVersion: "0.1",
+        dataUrl: buildUrl + "/ae7411cff3dc3fdf7e0f8edbcbf5f14e.data.unityweb",
+        frameworkUrl: buildUrl + "/95e5288944ee9eac77f48b8ab39708d8.js.unityweb",
+        codeUrl: buildUrl + "/fd5246bc9f5d1e92b9ea6120604f215e.wasm.unityweb",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "PlayDeck",
+        productName: "Sample Bridge",
+        productVersion: "0.1",
     };
 
     const container = document.querySelector("#unity-container");
     const canvas = document.querySelector("#unity-canvas");
-    const loadingCover = document.querySelector("#loading-cover");
-    const progressBarEmpty = document.querySelector("#unity-progress-bar-empty");
-    const progressBarFull = document.querySelector("#unity-progress-bar-full");
-    const spinner = document.querySelector('.spinner');
-
-    if (overlayBackgroundColor !== "-" && overlayBackgroundColor !== " " && overlayBackgroundColor !== "")
-      canvas.style.background = overlayBackgroundColor;
-
-    if (progressBarFillColor !== "-" && progressBarFillColor !== " " && progressBarFillColor !== "")
-      progressBarFull.style.background = progressBarFillColor;
-
-    if (progressBarBackgroundColor !== "-" && progressBarBackgroundColor !== " " && progressBarBackgroundColor !== "")
-      progressBarEmpty.style.background = progressBarBackgroundColor;
-
-    if (progressBarBorderColor !== "-" && progressBarBorderColor !== " " && progressBarBorderColor !== "")
-      progressBarEmpty.style.border.color = progressBarBorderColor;
-
 
     if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-      container.className = "unity-mobile";
+        config.devicePixelRatio = window.devicePixelRatio;
     }
-
-    loadingCover.style.display = "";
-
-    const unityLoader = document.createElement("script");
-    unityLoader.src = loaderUrl;
-    unityLoader.onload = async () => {
-      //await _gpAwaiter.ready;
-      createUnityInstance(canvas, config, (progress) => {
-        spinner.style.display = "none";
-        progressBarEmpty.style.display = "";
-        progressBarFull.style.width = `${100 * progress}%`;
-      }).then((unityInstance) => {
-        window.unityInstance = unityInstance;
-        //_unityAwaiter.done(unityInstance);
-        loadingCover.style.display = "none";
-      }).catch((message) => {
-        //_unityAwaiter.abort(message);
-        alert(message);
-      });
+    
+    const script = document.createElement("script");
+    script.src = loaderUrl;
+    script.onload = () => {
+        const playdeckBridgeInstance = playDeckBridge();
+        createUnityInstance(canvas, config, (progress) => {
+            playdeckBridgeInstance?.setLoadingProgress(progress * 100)
+        }).then(unityInstance => {
+            playdeckBridgeInstance?.init(unityInstance);
+        });
     };
-    document.body.appendChild(unityLoader);
-
-    document.addEventListener("pointerdown", () => {
-      container.focus();
-      window.focus();
-      canvas.focus();
-    });
-
-  </script>
+    document.body.appendChild(script);
+</script>
 </body>
-
 </html>
