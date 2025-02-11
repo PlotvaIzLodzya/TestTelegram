@@ -16,6 +16,10 @@
   </script>
 	<script src="playDeckBridge.js"></script>
 
+  <script type="text/javascript" >
+    window.yandexMetricaCounterId = 4705195;
+  </script>
+
   <!-- Yandex.Metrika counter -->
   <script type="text/javascript" >
     (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
@@ -63,7 +67,7 @@
     const buildUrl = "Build";
     const loaderUrl = buildUrl + "/TestTelegram.loader.js";
     const config = {
-      dataUrl: buildUrl + "/83c9a0c5a753e22febc44c5adcbb8cdd.data",
+      dataUrl: buildUrl + "/010f70a8488e88d1ae37edbd91869ded.data",
       frameworkUrl: buildUrl + "/33db6eb433569671c0b80cf6d806d085.js",
       codeUrl: buildUrl + "/d491492cb853bd4cd018994d5277381c.wasm",
       streamingAssetsUrl: "StreamingAssets",
@@ -109,7 +113,6 @@
         progressBarFull.style.width = `${100 * progress}%`;
       }).then((unityInstance) => {
 	playdeckBridgeInstance?.init(unityInstance);
-	ym(window.yandexMetricaCounterId,'reachGoal','unityStart', { unityLoadTime: (unityEndLoadingTime - unityStartLoadingTime) / 1000 });
         window.unityInstance = unityInstance;
         //_unityAwaiter.done(unityInstance);
         loadingCover.style.display = "none";
